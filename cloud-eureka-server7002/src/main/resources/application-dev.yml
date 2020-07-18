@@ -1,0 +1,19 @@
+server:
+  port: 7002
+
+spring:
+  application:
+    name: cloud-eureka-server
+
+eureka:
+  instance:
+    hostname: eureka7002.com
+  client:
+    # 是否将当前服务注册到eureka
+    registerWithEureka: false
+    # 是否在本地缓存注册表信息，默认为true
+    fetchRegistry: true
+    serviceUrl:
+      # 配置其他eureka的地址，如果多台则逗号分隔。这里配置7001，表示7001和7002组成集群
+      defaultZone: http://eureka7001.com:7001/eureka
+

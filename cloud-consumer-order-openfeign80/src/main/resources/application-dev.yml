@@ -1,0 +1,20 @@
+server:
+  port: 80
+
+spring:
+  application:
+    name: cloud-consumer-order
+
+eureka:
+  client:
+    # 是否将当前服务注册到eureka,虽说服务消费者不用注册到eureka，但是RestTemplate的负载均衡需要注册到eureka才能生效
+    registerWithEureka: true
+    # 是否在本地缓存注册表信息，默认为true
+    fetchRegistry: true
+    serviceUrl:
+      # 配置其他eureka的地址，如果多台则逗号分隔。
+      defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka
+
+logging:
+  level:
+    com.liuhangs.springcloud.order.service.OrderService: debug
