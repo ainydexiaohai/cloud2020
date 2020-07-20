@@ -15,6 +15,12 @@ eureka:
       # 配置其他eureka的地址，如果多台则逗号分隔。
       defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka
 
+ribbon:
+  #调用接口读取超时时间
+  ReadTimeout:  5000
+  #调用接口连接超时时间
+  ConnectTimeout: 5000
+
 logging:
   level:
     com.liuhangs.springcloud.order.service.OrderService: debug

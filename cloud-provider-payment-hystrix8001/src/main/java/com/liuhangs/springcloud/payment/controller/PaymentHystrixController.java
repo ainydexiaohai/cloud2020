@@ -6,11 +6,11 @@ import com.liuhangs.springcloud.payment.service.PaymentHystrixService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-/**
+/**服务提供者对外提供的接口
  * @author 11757
  * @DATE 2020/7/15
  */
-    @RequestMapping("provider/payment/hystrix")
+@RequestMapping("provider/payment/hystrix")
 @RestController
 public class PaymentHystrixController {
 
@@ -37,5 +37,16 @@ public class PaymentHystrixController {
     @GetMapping("/break/{id}")
     public CommonResult getPaymentBreak(@PathVariable("id") Long id) {
         return paymentHystrixService.getPaymentBreak(id);
+    }
+
+    /**
+     * 给80服务消费者准备的超时接口
+     * @param id
+     * @return
+     */
+    @GetMapping("/timeoutfor80/{id}")
+    public CommonResult getPaymentTimeOutFor80(@PathVariable("id") Long id)
+    {
+        return paymentHystrixService.getPaymentTimeOutFor80(id);
     }
 }

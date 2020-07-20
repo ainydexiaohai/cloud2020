@@ -11,6 +11,7 @@ import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author 11757
@@ -69,5 +70,24 @@ public class PaymentController {
                     .getInstanceId(),instance.getHost(),instance.getPort(),instance.getUri());
         }
         return discoveryClient;
+    }
+
+    /**
+     * 故意暂停3秒
+     * @param id
+     * @return
+     */
+    @GetMapping("/timeout/{id}")
+    public CommonResult testTimeout(@PathVariable("id") Long id)
+    {
+        try
+        {
+            TimeUnit.MILLISECONDS.sleep(3000);
+        }
+        catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        }
+        return new CommonResult(200, "调用端口" + SERVER_PORT + "查询支付流水成功，暂停3秒，Id = " + id);
     }
 }

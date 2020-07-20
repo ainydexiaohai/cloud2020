@@ -7,7 +7,7 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.context.annotation.Bean;
 
-/**
+/**服务提供者启动类
  * @author 11757
  * @DATE 2020/7/15
  */
@@ -33,5 +33,4 @@ public class PaymentHystrixStart8001 {
         registrationBean.setName("HystrixMetricsStreamServlet");
         return registrationBean;
     }
-
 }

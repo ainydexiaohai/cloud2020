@@ -14,3 +14,7 @@ eureka:
       # 配置eureka的地址，如果多台则逗号分隔。
       defaultZone: http://eureka7001.com:7001/eureka
 
+logging:
+  level:
+   com.netflix.hystrix: DEBUG
+

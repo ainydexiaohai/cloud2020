@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
+/**服务消费者对外提供的接口
  * @author 11757
  * @DATE 2020/7/16
  */
@@ -26,6 +26,6 @@ public class OrderHystrixController {
 
     @GetMapping("/timeout/{id}")
     public CommonResult getPaymentTimeOut(@PathVariable("id") Long id) {
-        return paymentHystrixService.getPaymentTimeOut(id);
+        return paymentHystrixService.getPaymentTimeOutFor80(id);
     }
 }

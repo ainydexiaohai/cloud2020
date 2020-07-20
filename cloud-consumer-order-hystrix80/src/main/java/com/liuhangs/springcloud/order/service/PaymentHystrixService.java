@@ -17,6 +17,11 @@ public interface PaymentHystrixService {
     @GetMapping("provider/payment/hystrix/ok/{id}")
     public CommonResult getPaymentOK(@PathVariable("id") Long id);
 
-    @GetMapping("provider/payment/hystrix/timeout/{id}")
-    public CommonResult getPaymentTimeOut(@PathVariable("id") Long id);
+    /**
+     * 调用服务提供者的getPaymentTimeOutFor80接口
+     * @param id
+     * @return
+     */
+    @GetMapping("provider/payment/hystrix/timeoutfor80/{id}")
+    public CommonResult getPaymentTimeOutFor80(@PathVariable("id") Long id);
 }

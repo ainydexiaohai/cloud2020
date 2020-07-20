@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * @author 11757
  * @DATE 2020/7/10
@@ -39,5 +41,24 @@ public class PaymentController {
             return new CommonResult<Payment>(200, "调用端口" + SERVER_PORT + "查询支付流水成功", payment);
         }
         return new CommonResult<Payment>(444, "调用端口" + SERVER_PORT + "查询支付流水失败");
+    }
+
+    /**
+     * 故意暂停3秒
+     * @param id
+     * @return
+     */
+    @GetMapping("/timeout/{id}")
+    public CommonResult testTimeout(@PathVariable("id") Long id)
+    {
+        try
+        {
+            TimeUnit.MILLISECONDS.sleep(3000);
+        }
+        catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        }
+        return new CommonResult(200, "调用端口" + SERVER_PORT + "查询支付流水成功，暂停3秒，Id = " + id);
     }
 }

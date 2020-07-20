@@ -4,9 +4,9 @@ import com.liuhangs.springcloud.api.entities.CommonResult;
 import com.liuhangs.springcloud.payment.service.PaymentHystrixService;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
 import java.util.concurrent.TimeUnit;
 
 /**这个类里包含服务降级和服务熔断的测试
@@ -14,6 +14,7 @@ import java.util.concurrent.TimeUnit;
  * @DATE 2020/7/15
  */
 @Service
+@Slf4j
 public class PaymentHystrixServiceImpl implements PaymentHystrixService {
 
     @Value("${server.port}")
@@ -52,7 +53,7 @@ public class PaymentHystrixServiceImpl implements PaymentHystrixService {
             e.printStackTrace();
         }
         return new CommonResult(200, "请求ID为：" + id + "， 当前线程是：" + Thread.currentThread().getName() + ", 服务端口：" +
-                SERVER_PORT + ", 线程睡眠3秒");
+                SERVER_PORT + ", 线程睡眠5秒");
     }
 
     /**
@@ -74,14 +75,23 @@ public class PaymentHystrixServiceImpl implements PaymentHystrixService {
      */
     @HystrixCommand(fallbackMethod = "getPaymentBreakFallbackMethod", commandProperties = {
             @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "10"),//检测最近10次请求
-            @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "10000"),//过多久再次检测是否开启熔断器
+            @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "10000"),
+            //过多久再次检测是否关闭熔断器
             @HystrixProperty(name ="circuitBreaker.errorThresholdPercentage",value = "60")//错误率为60%就开启熔断器
     })
     @Override
     public CommonResult getPaymentBreak(Long id)
     {
         if (id < 0) {
-            throw new RuntimeException();
+            try
+            {
+                //execution.isolation.thread.timeoutInMilliseconds默认是1秒，所以这里会超时
+                TimeUnit.MILLISECONDS.sleep(5000);
+            }
+            catch (InterruptedException e)
+            {
+                log.error("执行getPaymentBreak方法超时，请稍后重试");
+            }
         }
         return new CommonResult(200, "请求ID为：" + id + "， 当前线程是：" + Thread.currentThread().getName() + ", 服务端口：" +
                 SERVER_PORT + ", 请求正确");
@@ -91,6 +101,27 @@ public class PaymentHystrixServiceImpl implements PaymentHystrixService {
     public CommonResult getPaymentBreakFallbackMethod(Long id)
     {
         return new CommonResult(200, "请求ID为：" + id + "， 当前线程是：" + Thread.currentThread().getName() + ", 服务端口：" +
-                SERVER_PORT + ", 请求错误，请稍后再试");
+                SERVER_PORT + ", 请求错误，进入降级熔断方法");
+    }
+
+    /**
+     * 给80服务消费者准备的超时方法，避免和前面的服务降级方法混淆
+     * 此方法会睡眠5秒
+     * @param id
+     * @return
+     */
+    @Override
+    public CommonResult getPaymentTimeOutFor80(Long id)
+    {
+        try
+        {
+            TimeUnit.MILLISECONDS.sleep(5000);
+        }
+        catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        }
+        return new CommonResult(200, "请求ID为：" + id + "， 当前线程是：" + Thread.currentThread().getName() + ", 服务端口：" +
+                SERVER_PORT + ", 线程睡眠5秒");
     }
 }

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
+/**服务消费者controller
  * @author 11757
  * @DATE 2020/7/14
  */
@@ -23,6 +23,13 @@ public class OrderController {
     public CommonResult queryPaymentById(@PathVariable("id") Long id)
     {
         CommonResult commonResult = orderService.queryPaymentById(id);
+        return commonResult;
+    }
+
+    @GetMapping("timeout/{id}")
+    public CommonResult testTimeout(@PathVariable("id") Long id)
+    {
+        CommonResult commonResult = orderService.testTimeout(id);
         return commonResult;
     }
 
