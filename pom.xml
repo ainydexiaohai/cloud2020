@@ -24,6 +24,18 @@
       <module>cloud-provider-payment-hystrix8001</module>
       <module>cloud-consumer-order-hystrix80</module>
       <module>cloud-consumer-hystrix-dashboard9001</module>
+      <module>cloud-gateway-gateway9527</module>
+      <module>cloud-config-center-3344</module>
+      <module>cloud-config-client-3355</module>
+      <module>cloud-config-client-3366</module>
+    <module>cloud-stream-kafka-provider8801</module>
+      <module>cloud-stream-kafka-consumer8802</module>
+    <module>cloud-stream-kafka-consumer8803</module>
+    <module>cloudalibaba-provider-payment9001</module>
+      <module>cloudalibaba-provider-payment9002</module>
+    <module>cloudalibaba-nacos-consumer-order83</module>
+      <module>cloudalibaba-nacos-config-client3377</module>
+    <module>cloudalibaba-provider-payment9003</module>
   </modules>
 
 

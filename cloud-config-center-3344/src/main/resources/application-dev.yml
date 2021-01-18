@@ -1,0 +1,29 @@
+server:
+  port: 3344
+spring:
+  application:
+    name: cloud-config-center
+  cloud:
+    config:
+      server:
+        git:
+          #git地址
+          uri:  git@github.com:ainydexiaohai/cloud2020-config.git
+          search-paths:
+          #文件查找目录
+            - cloud2020-config
+      #默认读取分支
+      label: master
+
+#将Config服务端注册进Eureka
+eureka:
+  client:
+    service-url:
+      defaultZone:  http://localhost:7001/eureka
+
+#增加Bus消息总线
+management:
+  endpoints:
+    web:
+      exposure:
+        include: 'bus-refresh'

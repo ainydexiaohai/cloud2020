@@ -1,0 +1,29 @@
+server:
+  port: 9527
+
+#网关配置
+spring:
+  cloud:
+    gateway:
+      routes:
+      #/provider/payment/**的这些请求进入payment_route这个路由，然后调用http://localhost:8001去执行
+      - id: payment_route
+        uri: lb://cloud-provider-payment
+        predicates:
+        - Path=/provider/payment/**
+
+#注册进eureka
+eureka:
+  client:
+    # 是否将当前服务注册到eureka,虽说服务消费者不用注册到eureka，但是RestTemplate的负载均衡需要注册到eureka才能生效
+    registerWithEureka: true
+    # 是否在本地缓存注册表信息，默认为true
+    fetchRegistry: true
+    serviceUrl:
+      # 配置其他eureka的地址，如果多台则逗号分隔。
+      defaultZone: http://eureka7001.com:7001/eureka
+  instance:
+    #该实例注册到服务中心的唯一ID,eureka页面展示
+    instanceId: gateway9527
+    #该实例，相较于hostname是否优先使用IP
+    preferIpAddress: true

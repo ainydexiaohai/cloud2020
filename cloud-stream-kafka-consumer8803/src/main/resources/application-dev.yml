@@ -1,0 +1,17 @@
+server:
+  port: 8803
+
+spring:
+  application:
+    name: cloud-stream-kafka-consumer
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:9092         #Kafka的消息中间件服务器
+      bindings:
+        input:      #这是消费者
+          destination: first   #消息订阅的topit
+          group: cloud-stream-kafka-consumer #消费者分组
+      default-binder: kafka
+

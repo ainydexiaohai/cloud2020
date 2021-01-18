@@ -1,0 +1,16 @@
+server:
+  port: 9003
+
+spring:
+  application:
+    name: cloudalibaba-provider-payment
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.0.105:8840 #测试联想电脑上安装的nacos集群，8840是nginx代理的端口，对应的nacos是8848、8849、8850
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

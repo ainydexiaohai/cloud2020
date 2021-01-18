@@ -1,0 +1,31 @@
+server:
+  port: 3366
+
+spring:
+  application:
+    name: config-client
+  cloud:
+    config:
+      label: master  #读取分支
+      name: config  #配置文件名称
+      profile: prod  #读取文件的后缀
+      uri: http://localhost:3344  #配置中心服务地址
+      #最终读取：http://localhost:3344/master/config-prod.yml
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka
+
+#暴露监控端口，用来开放动态刷新功能
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+#消息总线需要的RabbitMQ配置
+rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest

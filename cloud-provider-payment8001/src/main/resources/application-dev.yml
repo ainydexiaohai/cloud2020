@@ -25,7 +25,7 @@ eureka:
     fetchRegistry: true
     serviceUrl:
       # 配置其他eureka的地址，如果多台则逗号分隔。
-      defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka
+      defaultZone: http://eureka7001.com:7001/eureka
   instance:
     #该实例注册到服务中心的唯一ID
     instanceId: payment8001
